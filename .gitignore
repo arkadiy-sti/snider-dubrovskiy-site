@@ -37,8 +37,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# cloudflare (opennextjs-cloudflare / wrangler)
+.open-next
+.wrangler
+cloudflare-env.d.ts
+
 # claude code local settings (machine-specific, not shared)
-.claude/settings.local.json
+.claude/
 
 # typescript
 *.tsbuildinfo
