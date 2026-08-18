@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+:root {
+  --ice-black: #05070d;
+  --ice-navy: #0b1220;
+  --ice-navy-light: #131c30;
+  --ice-white: #f4f8fb;
+  --ice-white-dim: #c7d2e0;
+  --ice-blue: #8fd4ff;
+  --crystal: #5ec8ff;
+  --crystal-dim: #2f5b7a;
+  --line: rgba(244, 248, 251, 0.12);
+}
+
+@theme inline {
+  --color-ice-black: var(--ice-black);
+  --color-ice-navy: var(--ice-navy);
+  --color-ice-navy-light: var(--ice-navy-light);
+  --color-ice-white: var(--ice-white);
+  --color-ice-white-dim: var(--ice-white-dim);
+  --color-ice-blue: var(--ice-blue);
+  --color-crystal: var(--crystal);
+  --color-crystal-dim: var(--crystal-dim);
+  --color-line: var(--line);
+
+  --font-sans: var(--font-archivo);
+  --font-serif: var(--font-fraunces);
+
+  --animate-marquee: marquee 32s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ice-black);
+  color: var(--ice-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: rgba(94, 200, 255, 0.28);
+  color: var(--ice-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--crystal);
+  outline-offset: 3px;
+}
+
+/* subtle film grain, used sparingly on dark sections */
+.bg-grain {
+  position: relative;
+}
+
+.bg-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.glass {
+  background: rgba(11, 18, 32, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.skate-line {
+  position: relative;
+}
+
+.skate-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35em;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--crystal) 20%,
+    var(--crystal) 80%,
+    transparent
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skate-line:hover::before,
+.skate-line:focus-visible::before {
+  transform: scaleX(1);
+}
+
+/* thin custom scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ice-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ice-navy-light);
+  border-radius: 999px;
+  border: 2px solid var(--ice-black);
+}
+
+/* hero press-box camera flashes — irregular bright blooms, never in sync */
+.camera-flash {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.4) 42%,
+    transparent 72%
+  );
+  opacity: 0;
+  animation-name: camera-flash;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes camera-flash {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  1.5% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  4% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* hero ice streaks — abstract glowing motion trails suggesting skaters gliding at a distance */
+.ice-streak {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  width: 130px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(143, 212, 255, 0.8), transparent);
+  filter: blur(1.5px);
+  offset-rotate: auto;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.ice-streak-a {
+  offset-path: path("M -60 170 C 220 80, 460 190, 760 130 C 980 80, 1180 180, 1460 110");
+  animation-name: skate-glide;
+  animation-duration: 17s;
+}
+
+.ice-streak-b {
+  offset-path: path("M 1460 200 C 1180 240, 940 130, 700 180 C 440 230, 180 120, -60 190");
+  animation-name: skate-glide;
+  animation-duration: 22s;
+  animation-delay: -8s;
+}
+
+.ice-streak-c {
+  offset-path: path("M -60 140 C 300 210, 620 90, 900 160 C 1140 220, 1280 100, 1460 150");
+  animation-name: skate-glide;
+  animation-duration: 26s;
+  animation-delay: -14s;
+}
+
+@keyframes skate-glide {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
